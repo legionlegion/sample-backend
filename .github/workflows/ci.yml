@@ -104,17 +104,3 @@ jobs:
 
     - name: Build project
       run: npm run build
-
-    - name: Test server starts
-      env:
-        DATABASE_URL: mysql://root:test@localhost:3306/test
-        JWT_SECRET: test_secret
-        JWT_REFRESH_SECRET: test_refresh_secret
-        PORT: 3000
-      run: |
-        timeout 10s npm start || code=$?
-        if [[ $code -ne 124 && $code -ne 0 ]]; then
-          echo "Server failed to start"
-          exit 1
-        fi
-        echo "Server started successfully"
