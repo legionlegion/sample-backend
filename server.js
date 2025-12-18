@@ -1,8 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth.routes.js';
 
 dotenv.config();
 
@@ -37,7 +38,6 @@ app.get('/', (req, res) => {
   res.send('DBS App API is running');
 });
 
-const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {

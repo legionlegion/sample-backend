@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const prisma = require('../prisma/client');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import prisma from '../prisma/client.js';
 
 const generateAccessToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '15m'});
@@ -10,7 +10,7 @@ const generateRefreshToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d'});
 }
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -46,7 +46,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -77,7 +77,7 @@ const login = async (req, res) => {
   }
 };
 
-const refresh = (req, res) => {
+export const refresh = (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
@@ -93,9 +93,7 @@ const refresh = (req, res) => {
   }
 };
 
-const logout = (req, res) => {
+export const logout = (req, res) => {
   res.clearCookie('refreshToken');
   res.json({ message: 'Logged out successfully' });
 };
-
-module.exports = { register, login, refresh, logout };
