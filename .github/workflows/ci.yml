@@ -46,10 +46,10 @@ jobs:
         DATABASE_URL: mysql://root:test_password@localhost:3306/test_db
       run: npx prisma migrate deploy
 
-    - name: Run tests (Placeholder)
-      env:q
+    - name: Run tests
+      env:
+        NODE_ENV: test
         DATABASE_URL: mysql://root:test_password@localhost:3306/test_db
         JWT_SECRET: test_jwt_secret_key_for_ci
-        JWT_REFRESH_SECRET: test_jwt_refresh_secret_key_for_ci
         PORT: 3000
       run: npm test

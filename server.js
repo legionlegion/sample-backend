@@ -40,17 +40,23 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 
-app.listen(PORT, () => {
-  console.log(`DBS Backend at Port ${PORT}`)
-})
+// Export app for testing
+export default app;
 
-// Handle uncaught errors
-process.on('uncaughtException', (error) => {
-  console.error('UNCAUGHT EXCEPTION:', error);
-  process.exit(1);
-});
+// Only start server if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`DBS Backend at Port ${PORT}`)
+  })
 
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('UNHANDLED REJECTION at:', promise, 'reason:', reason);
-  process.exit(1);
-});
+  // Handle uncaught errors
+  process.on('uncaughtException', (error) => {
+    console.error('UNCAUGHT EXCEPTION:', error);
+    process.exit(1);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('UNHANDLED REJECTION at:', promise, 'reason:', reason);
+    process.exit(1);
+  });
+}
